@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi">
     <title>Simple PDM Calculator</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -14,16 +14,16 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: linear-gradient(to right top, #4386F9, #78A3FC, #A3BEFF, #CED8FF, #F8F8FF);
+            background-image: linear-gradient(to right top, #78A3FC, #A3BEFF, #CED8FF, #F8F8FF);
         }
         .container {
             text-align: center;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             padding: 40px;
             max-width: 500px;
-            width: 100%;
+            width: 90%; /* Adjusted width for better fit on Android devices */
             transition: transform 0.3s ease;
             transform: translateZ(0);
         }
@@ -31,20 +31,22 @@
             transform: translateY(-5px) translateZ(0);
         }
         h2 {
-            color: #483D8B;
+            color: #333;
             margin-bottom: 30px;
             text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
         }
         input {
             padding: 15px;
             margin: 15px;
-            border: 2px solid #483D8B;
+            border: 2px solid #666;
             border-radius: 10px;
             outline: none;
             width: calc(50% - 30px);
             font-size: 18px;
             transition: border-color 0.3s ease;
             box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            color: #333;
+            background-color: #f9f9f9;
         }
         input:focus {
             border-color: #4169E1;
@@ -52,7 +54,7 @@
         #result {
             margin-top: 30px;
             padding-top: 30px;
-            border-top: 2px solid #483D8B;
+            border-top: 2px solid #666;
             opacity: 0;
             transition: opacity 0.5s ease;
             transform: translateZ(0);
@@ -61,12 +63,13 @@
             margin: 15px 0;
             font-size: 22px;
             font-weight: bold;
+            color: #333;
         }
         .green {
-            color: #28a745; /* Green color */
+            color: #28a745;
         }
         .red {
-            color: #dc3545; /* Red color */
+            color: #dc3545;
         }
         .option-box {
             display: flex;
@@ -76,16 +79,25 @@
         }
         .option-box label {
             margin-right: 10px;
-            color: #555; /* Dim gray */
+            color: #555;
         }
         .footer {
             margin-top: 40px;
             font-size: 14px;
-            color: #777;
+            color: #555;
         }
         .footer a {
-            color: #483D8B; /* Dark slate blue */
+            color: #483D8B;
             text-decoration: none;
+        }
+        /* Styles specific to Android devices */
+        @media only screen and (max-device-width: 480px) {
+            .container {
+                width: 95%; /* Adjusted width for better fit on smaller Android devices */
+            }
+            input {
+                width: calc(100% - 30px); /* Adjusted width for full width on smaller screens */
+            }
         }
     </style>
 </head>
@@ -96,9 +108,9 @@
         <input type="number" id="percentage" placeholder="Enter Percentage" oninput="calculate()">
         <br>
         <div class="option-box">
-            <label style="font-weight: bold;">Operation:</label>
-            <label><input type="radio" name="operation" value="add" checked onchange="calculate()"> Add</label>
-            <label><input type="radio" name="operation" value="subtract" onchange="calculate()"> Subtract</label>
+            <label style="font-weight: bold; color: #333;">Operation:</label>
+            <label><input type="radio" name="operation" value="add" checked onchange="calculate()" style="color: #333;"> Add</label>
+            <label><input type="radio" name="operation" value="subtract" onchange="calculate()" style="color: #333;"> Subtract</label>
         </div>
         <div id="result"></div>
         <div class="footer">
@@ -125,7 +137,7 @@
                 finalValue = value1 + addedValue;
             }
 
-            var resultText = `<p>Price with Tax Included: <span class="${operation === 'add' ? 'green' : 'red'}">${finalValue.toFixed(2)}</span></p>
+            var resultText = `<p>Final Output: <span class="${operation === 'add' ? 'green' : 'red'}">${finalValue.toFixed(2)}</span></p>
                 <p>Changes to Original Value: <span class="${operation === 'add' ? 'green' : 'red'}">${addedValue.toFixed(2)}</span></p>`;
 
             document.getElementById('result').innerHTML = resultText;

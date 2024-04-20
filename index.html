@@ -3,32 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Percentage Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Simple PDM Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: linear-gradient(to right top, #4386F9, #78A3FC, #A3BEFF, #CED8FF, #F8F8FF);
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            transition: transform 0.3s ease;
+            transform: translateZ(0);
+        }
+        .container:hover {
+            transform: translateY(-5px) translateZ(0);
+        }
+        h2 {
+            color: #483D8B;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            padding: 15px;
+            margin: 15px;
+            border: 2px solid #483D8B;
+            border-radius: 10px;
+            outline: none;
+            width: calc(50% - 30px);
+            font-size: 18px;
+            transition: border-color 0.3s ease;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+        }
+        input:focus {
+            border-color: #4169E1;
+        }
+        #result {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #483D8B;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            transform: translateZ(0);
+        }
+        #result p {
+            margin: 15px 0;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .green {
+            color: #28a745; /* Green color */
+        }
+        .red {
+            color: #dc3545; /* Red color */
+        }
+        .option-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .option-box label {
+            margin-right: 10px;
+            color: #555; /* Dim gray */
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #777;
+        }
+        .footer a {
+            color: #483D8B; /* Dark slate blue */
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Simple PDM Calculator</h1>
-        <div class="input-group">
-            <label for="originalValue">ExShowroom Price:</label>
-            <input type="number" id="originalValue" step="0.01">
+        <h2>Simple PDM Calculator</h2>
+        <input type="number" id="value1" placeholder="Enter Original Price" oninput="calculate()">
+        <input type="number" id="percentage" placeholder="Enter Percentage" oninput="calculate()">
+        <br>
+        <div class="option-box">
+            <label style="font-weight: bold;">Operation:</label>
+            <label><input type="radio" name="operation" value="add" checked onchange="calculate()"> Add</label>
+            <label><input type="radio" name="operation" value="subtract" onchange="calculate()"> Subtract</label>
         </div>
-        <div class="input-group">
-            <label for="percentage">Tax Rate:</label>
-            <input type="number" id="percentage" step="0.01">
-            <span>%</span>
+        <div id="result"></div>
+        <div class="footer">
+            Created by Unknown Guy ❤️ for SCRP Community
         </div>
-        <div class="input-group">
-            <label for="operation">Operation:</label>
-            <select id="operation">
-                <option value="add">Add Percentage</option>
-                <option value="subtract">Subtract Percentage</option>
-            </select>
-        </div>
-        <button onclick="calculate()">Calculate</button>
-        <div id="result" class="result"></div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        function calculate() {
+            var value1 = parseFloat(document.getElementById('value1').value);
+            var percentage = parseFloat(document.getElementById('percentage').value);
+            var operation = document.querySelector('input[name="operation"]:checked').value;
+
+            if (isNaN(value1) || isNaN(percentage)) {
+                return;
+            }
+
+            var addedValue = value1 * (percentage / 100);
+            var finalValue = 0;
+
+            if (operation === 'subtract') {
+                finalValue = value1 - addedValue;
+            } else {
+                finalValue = value1 + addedValue;
+            }
+
+            var resultText = `<p>Price with Tax Included: <span class="${operation === 'add' ? 'green' : 'red'}">${finalValue.toFixed(2)}</span></p>
+                <p>Changes to Original Value: <span class="${operation === 'add' ? 'green' : 'red'}">${addedValue.toFixed(2)}</span></p>`;
+
+            document.getElementById('result').innerHTML = resultText;
+            document.getElementById('result').style.opacity = 1;
+        }
+    </script>
 </body>
 </html>

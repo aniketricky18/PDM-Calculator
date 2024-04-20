@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Simple PDM Calculator</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -13,7 +13,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background-image: linear-gradient(to right top, #78A3FC, #A3BEFF, #CED8FF, #F8F8FF);
         }
         .container {
@@ -22,8 +22,8 @@
             border-radius: 20px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             padding: 40px;
-            max-width: 500px;
-            width: 90%; /* Adjusted width for better fit on Android devices */
+            max-width: 80%;
+            width: 100%;
             transition: transform 0.3s ease;
             transform: translateZ(0);
         }
@@ -90,13 +90,13 @@
             color: #483D8B;
             text-decoration: none;
         }
-        /* Styles specific to Android devices */
-        @media only screen and (max-device-width: 480px) {
+        /* Styles specific to Android devices in portrait mode */
+        @media only screen and (max-width: 480px) and (orientation: portrait) {
             .container {
-                width: 95%; /* Adjusted width for better fit on smaller Android devices */
+                max-width: 95%;
             }
             input {
-                width: calc(100% - 30px); /* Adjusted width for full width on smaller screens */
+                width: calc(100% - 30px);
             }
         }
     </style>
